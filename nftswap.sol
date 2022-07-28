@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract MyToken is ERC20{
     constructor() ERC20("MyToken", "MTK") {}
     uint256 public depositedEther;
-    uint256 tokenPerEther=10*10**18;//1 ether=10 erc20 tkns
+    uint256 tokenPerEther=10; //1 ether=10 erc20 tkns
     function Mint(address to) public payable{
         depositedEther = msg.value;
         uint256 amount = depositedEther * tokenPerEther;
@@ -28,11 +28,11 @@ contract nftSwap{
     constructor(address _tokenContract, address _nftContract, address _owner1){
         tokenContract = IERC20(_tokenContract);
         nftContract = IERC721(_nftContract);
-        owner1=_owner1;
+        owner1=_owner1; //owner of MyToken1 contract
     }
     function buyNFT(uint256 _amount, uint _nft) public payable{
-        tokenContract.transferFrom(msg.sender, address(this), _amount);
-        nftContract.transferFrom(owner1, msg.sender, _nft);
+        tokenContract.transferFrom(msg.sender, address(this), _amount); //depositing erc20
+        nftContract.transferFrom(owner1, msg.sender, _nft); // getting nft
     }
 }
 
